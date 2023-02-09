@@ -387,8 +387,10 @@ class _PILLoader(Loader):
         super(_PILLoader, self).__init__()
 
     def _load2reg(self, fname):
-        from scipy import misc
-        loaded = misc.imread(fname)
+        # from scipy import misc
+        # loaded = misc.imread(fname)
+        from skimage import io
+        loaded = io.imread(fname, plugin='pil')
         self.loaded = loaded
         ret = loaded
         # flattening is a no-op on 2D images
@@ -396,9 +398,11 @@ class _PILLoader(Loader):
         return ret
 
     def _save(self, fname, tformed):
-        from scipy import misc
-        img = misc.toimage(tformed)
-        img.save(fname)
+        # from scipy import misc
+        # img = misc.toimage(tformed)
+        # img.save(fname)
+        from skimage import io
+        io.imsave(fname, tformed)
 
     def guessCanLoad(self, fname):
         "We think that we can do everything"
